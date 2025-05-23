@@ -77,31 +77,35 @@ export const Header = () => {
     e.stopPropagation()
   }
   return (
-    <header className={css.header}>
-      <h1>
-        <Link to={'/'}>TOKTOKLOG</Link>
-      </h1>
-      <Hamburger isMenuActive={isMenuActive} toggleMenu={toggleMenu} />
-      <nav className={css.gnbCon} onClick={handleBackgroundClick}>
-        <div className={css.gnb} onClick={handleGnbClick}>
-          {username ? (
-            <>
-              <MenuLike to="/createPost" label="글쓰기" closeMenu={closeMenu} />
-              <MenuLike
-                to={`/userpage/${username}`}
-                label={`마이페이지(${username})`}
-                closeMenu={closeMenu}
-              />
-              <button onClick={handleLogout}>로그아웃</button>
-            </>
-          ) : (
-            <>
-              <MenuLike to="/register" label="회원가입" closeMenu={closeMenu} />
-              <MenuLike to="/login" label="로그인" closeMenu={closeMenu} />
-            </>
-          )}
+    <header className={css.headerCon}>
+      <div className={css.headerConInner}>
+        <div className={css.header}>
+          <h1>
+            <Link to={'/'}>TOKTOKLOG</Link>
+          </h1>
+          <Hamburger isMenuActive={isMenuActive} toggleMenu={toggleMenu} />
+          <nav className={css.gnbCon} onClick={handleBackgroundClick}>
+            <div className={css.gnb} onClick={handleGnbClick}>
+              {username ? (
+                <>
+                  <MenuLike to="/createPost" label="글쓰기" closeMenu={closeMenu} />
+                  <MenuLike
+                    to={`/userpage/${username}`}
+                    label={`마이페이지(${username})`}
+                    closeMenu={closeMenu}
+                  />
+                  <button onClick={handleLogout}>로그아웃</button>
+                </>
+              ) : (
+                <>
+                  <MenuLike to="/register" label="회원가입" closeMenu={closeMenu} />
+                  <MenuLike to="/login" label="로그인" closeMenu={closeMenu} />
+                </>
+              )}
+            </div>
+          </nav>
         </div>
-      </nav>
+      </div>
     </header>
   )
 }

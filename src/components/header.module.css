@@ -1,15 +1,28 @@
+.headerCon {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 27, 55, 0.1);
+}
+.headerConInner {
+  width: 100%;
+  max-width: 1140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .header {
+  width: 92%;
+  max-width: calc(100% - 48px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #eaeaea;
-  padding: 0.5rem;
-  position: sticky;
-  width: 100%;
-  top: 0;
-  z-index: 9999;
+  height: 60px;
 }
-
 .hamburger {
   position: absolute;
   top: 1rem;
@@ -21,9 +34,9 @@
   z-index: 100;
   border: none;
   cursor: pointer;
-  display: flex;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 
 .hamburger svg {
@@ -32,48 +45,46 @@
 }
 
 .gnbCon {
-  position: absolute;
-  top: 0;
-  right: 0;
   width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0);
-  backdrop-filter: blur(0px);
-  pointer-events: none;
-  transition:
-    background-color 0.3s,
-    backdrop-filter 0.3s;
   z-index: 90;
+  display: flex;
+  justify-content: end;
 }
 
 .gnb {
-  position: absolute;
-  top: 0;
-  right: -50%;
-  width: 50%;
-  height: 100%;
-  background-color: aliceblue;
-  padding: 5rem 1rem 0 1rem;
   transition: right 0.3s ease-in-out;
   z-index: 95;
+  display: flex;
+  gap: 8px;
 }
 
 .hamburger.active + .gnbCon {
-  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   pointer-events: auto;
 }
 
 .hamburger.active + .gnbCon .gnb {
   right: 0;
+  display: flex;
 }
 
 .gnb a,
 .gnb button {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 7px 12px;
+  width: 72px;
+  height: 32px;
   text-decoration: none;
-  color: #333;
+  color: #f9fafb;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #3182f6;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.1s;
+  &:hover {
+    background-color: #1b64da;
+  }
 }
 .gnb button {
   color: orangered;
@@ -83,4 +94,13 @@
   background-color: #aaaaaa;
   border-radius: 30px;
   color: white;
+}
+
+@media (max-width: 639px) {
+  .hamburger {
+    display: flex;
+  }
+  .gnb {
+    display: none;
+  }
 }
