@@ -17,24 +17,22 @@ export default function PostCard({ post }) {
 
   return (
     <article className={css.postcard} onClick={goDetail}>
-      <div className={css.post_img}>
-        <img src={`${import.meta.env.VITE_BACK_URL}/${post.cover}`} alt={post.title} />
-      </div>
-      <h3 className={css.title}>{post.title}</h3>
-
       <div className={css.info}>
-        <p>
+        <span className={css.title}>{post.title}</span>
+        <span className={css.dec}>{post.summary}</span>
+        <span className={css.etc}>
+          <time className={css.date}>{formatDate(post.createdAt)}</time>·{' '}
           <Link to={`/userpage/${post.author}`} onClick={handleAuthorClick} className={css.author}>
             {post.author}
           </Link>
-          <time className={css.date}>{formatDate(post.createdAt)}</time>
-        </p>
-        <p>
           <LikeButton postId={post._id} likes={post.likes} />
-          <span>💬</span> <span>{post.commentCount || 0}</span>
-        </p>
+          <span>💬</span>
+          <span>{post.commentCount || 0}</span>
+        </span>
       </div>
-      <p className={css.dec}>{post.summary}</p>
+      <div className={css.post_img}>
+        <img src={`${import.meta.env.VITE_BACK_URL}/${post.cover}`} alt={post.title} />
+      </div>
     </article>
   )
 }

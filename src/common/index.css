@@ -1,7 +1,21 @@
+@import url('https://static.toss.im/tps/main.css');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Toss Product Sans';
+}
+:root {
+  --grey50: #f9fafb;
+  --grey100: #f2f4f6;
+  --grey200: #e5e8eb;
+  --grey300: #d1d6db;
+  --grey400: #b0b8c1;
+  --grey500: #8b95a1;
+  --grey600: #6b7684;
+  --grey700: #4e5968;
+  --grey800: #333d4b;
+  --grey900: #191f28;
 }
 a {
   text-decoration: none;
@@ -19,4 +33,25 @@ button {
 h2 {
   font-size: 1.5rem;
   padding: 2rem 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 14px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 29, 58, 0.18);
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-corner {
+  display: none;
 }

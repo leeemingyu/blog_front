@@ -52,23 +52,89 @@ export const PostListPage = () => {
   }, [page])
 
   return (
-    <main className={css.postlistpage}>
-      <h2>글목록</h2>
-      {error && <p className={css.errorMessage}>{error}</p>}
-      {isLoading && page === 0 ? (
-        <p>로딩중...</p>
-      ) : postList.length === 0 ? (
-        <p className={css.noPostMessage}>첫번째 글의 주인공이 되어주세요</p>
-      ) : (
-        // ref
-        <ul className={css.postList} ref={listRef}>
-          {postList.map((post, i) => (
-            <li key={post._id} ref={i === postList.length - 1 ? lastPostElementRef : null}>
-              <PostCard post={post} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+    <div className={css.container}>
+      <div className={css.bannerCon}>
+        <div className={css.banner}></div>
+      </div>
+      <main className={css.postlistpage}>
+        <div className={css.postListCon}>
+          <div className={css.tabsCon}>
+            <div className={css.tabs}>
+              <div className={css.indicator}></div>
+              <div className={`${css.tab} ${css.active}`}>전체</div>
+              <div className={css.tab}>개발</div>
+            </div>
+          </div>
+          {error && <p className={css.errorMessage}>{error}</p>}
+          {isLoading && page === 0 ? (
+            <p>로딩중...</p>
+          ) : postList.length === 0 ? (
+            <p className={css.noPostMessage}>첫번째 글의 주인공이 되어주세요</p>
+          ) : (
+            // ref
+            <ul className={css.postList} ref={listRef}>
+              {postList.map((post, i) => (
+                <li key={post._id} ref={i === postList.length - 1 ? lastPostElementRef : null}>
+                  <PostCard post={post} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className={css.trending}>
+          <div className={css.topPosts}>
+            <span>인기있는 글</span>
+            <article>
+              <div>
+                <span>제목1제목1제목1제목1</span>
+                <span>이름</span>
+              </div>
+            </article>
+            <article>
+              <div>
+                <span>제목2제목2제목2제목2</span>
+                <span>이름</span>
+              </div>
+            </article>
+            <article>
+              <div>
+                <span>제목3제목3제목3제목3</span>
+                <span>이름</span>
+              </div>
+            </article>
+          </div>
+          <div>
+            <span>최근 댓글</span>
+            <div>
+              <div>이름</div>
+              <div>
+                <span>댓글1댓글1댓글1</span>
+              </div>
+              <div>
+                <span>제목</span>
+              </div>
+            </div>
+            <div>
+              <div>이름</div>
+              <div>
+                <span>댓글1댓글1댓글1</span>
+              </div>
+              <div>
+                <span>제목</span>
+              </div>
+            </div>
+            <div>
+              <div>이름</div>
+              <div>
+                <span>댓글1댓글1댓글1</span>
+              </div>
+              <div>
+                <span>제목</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   )
 }
