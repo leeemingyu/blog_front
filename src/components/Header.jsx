@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { setUserInfo } from '../store/userSlice'
 import { getUserProfile, logoutUser } from '../apis/userApi'
-import { useSmoothHeight } from '../hooks/useSmoothHeight'
 
 export const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false)
@@ -15,8 +14,6 @@ export const Header = () => {
   console.log(username)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
-
-  const contentRef = useSmoothHeight(open, 800)
 
   useEffect(() => {
     const getProfile = async () => {
