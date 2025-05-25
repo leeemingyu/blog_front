@@ -71,7 +71,6 @@
 .container button {
   padding: 1em;
   background-color: #3182f6;
-  width: 65px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -83,12 +82,15 @@
   font-size: 15px;
   font-weight: 600;
   color: #fff;
+  transition: 0.2s;
 }
 .container button:disabled {
   cursor: not-allowed;
   background-color: #90c2ff;
 }
-
+.container button:not(:disabled):hover {
+  background-color: #1b64da;
+}
 .socialLogin {
   margin-top: 2rem;
   text-align: center;

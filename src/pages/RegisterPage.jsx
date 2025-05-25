@@ -154,7 +154,7 @@ export const RegisterPage = () => {
 
         <div className={css.buttonWrapper}>
           <Link to="/login">로그인</Link>
-          <button type="submit">가입하기</button>
+          <button type="submit">계정 만들기</button>
         </div>
       </form>
 

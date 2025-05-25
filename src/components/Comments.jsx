@@ -12,6 +12,8 @@ export const Comments = ({ postId, onCommentCountChange }) => {
   const [comments, setComments] = useState([])
   const [editState, setEditState] = useState({ id: null, content: '' })
 
+  const isDisabled = !newComment
+
   const fetchComments = useCallback(async () => {
     try {
       const response = await getComments(postId)
@@ -171,7 +173,7 @@ export const Comments = ({ postId, onCommentCountChange }) => {
             placeholder="댓글을 입력하세요"
             disabled={isLoading}
           />
-          <button type="submit" disabled={isLoading}>
+          <button type="submit" disabled={isLoading || isDisabled}>
             {isLoading ? '등록 중...' : '댓글 남기기'}
           </button>
         </form>
