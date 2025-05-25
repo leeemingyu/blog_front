@@ -15,6 +15,8 @@ export const CreatePost = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
 
+  const isDisabled = !title || !summary || !content
+
   const user = useSelector(state => state.user.user)
   // 사용자 정보가 없으면 로그인 페이지로 리디렉션
   useEffect(() => {
@@ -65,7 +67,6 @@ export const CreatePost = () => {
   }
   return (
     <main className={css.createpost}>
-      <h2>글쓰기</h2>
       {error && <div className={css.error}>{error}</div>}
       <form className={css.writecon} onSubmit={handleCreatePost}>
         <label htmlFor="title">제목</label>
@@ -102,10 +103,9 @@ export const CreatePost = () => {
             placeholder="내용을 입력해주세요"
           />
         </div>
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" disabled={isSubmitting || isDisabled}>
           {isSubmitting ? '등록중...' : '등록'}
         </button>
-        <div>test</div>
       </form>
     </main>
   )

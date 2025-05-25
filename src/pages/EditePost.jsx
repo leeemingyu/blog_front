@@ -112,8 +112,6 @@ export const EditePost = () => {
 
   return (
     <main className={css.editepost}>
-      <h2>글 수정하기</h2>
-
       {error && <div className={css.error}>{error}</div>}
 
       <form className={css.writecon} onSubmit={handleSubmit}>
@@ -139,9 +137,7 @@ export const EditePost = () => {
           required
         />
 
-        <label htmlFor="files" hidden>
-          파일첨부
-        </label>
+        <label htmlFor="files">파일</label>
         <input
           type="file"
           id="files"
