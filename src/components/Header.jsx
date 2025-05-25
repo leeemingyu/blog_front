@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { setUserInfo } from '../store/userSlice'
 import { getUserProfile, logoutUser } from '../apis/userApi'
+import { useSmoothHeight } from '../hooks/useSmoothHeight'
 
 export const Header = () => {
   const [isMenuActive, setIsMenuActive] = useState(false)
@@ -14,6 +15,8 @@ export const Header = () => {
   console.log(username)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
+
+  const contentRef = useSmoothHeight(open, 800)
 
   useEffect(() => {
     const getProfile = async () => {
@@ -33,6 +36,10 @@ export const Header = () => {
     getProfile()
   }, [dispatch])
 
+  const handleLogin = async () => {
+    closeMenu()
+    navigate('/login')
+  }
   const handleLogout = async () => {
     try {
       await logoutUser()
@@ -50,7 +57,7 @@ export const Header = () => {
   if (isLoading) {
     return (
       <header className={css.header}>
-        <h1>
+        <h1 className={css.logo}>
           <Link to={'/'}>TOKTOKLOG</Link>
         </h1>
         <div>로딩 중...</div>
@@ -77,34 +84,32 @@ export const Header = () => {
     e.stopPropagation()
   }
   return (
-    <header className={css.headerCon}>
-      <div className={css.headerConInner}>
-        <div className={css.header}>
-          <h1>
-            <Link to={'/'}>TOKTOKLOG</Link>
-          </h1>
-          <Hamburger isMenuActive={isMenuActive} toggleMenu={toggleMenu} />
-          <nav className={css.gnbCon} onClick={handleBackgroundClick}>
-            <div className={css.gnb} onClick={handleGnbClick}>
-              {username ? (
-                <>
-                  <MenuLike to="/createPost" label="글쓰기" closeMenu={closeMenu} />
-                  <MenuLike
-                    to={`/userpage/${username}`}
-                    label={`마이페이지(${username})`}
-                    closeMenu={closeMenu}
-                  />
-                  <button onClick={handleLogout}>로그아웃</button>
-                </>
-              ) : (
-                <>
-                  <MenuLike to="/register" label="회원가입" closeMenu={closeMenu} />
-                  <MenuLike to="/login" label="로그인" closeMenu={closeMenu} />
-                </>
-              )}
-            </div>
-          </nav>
-        </div>
+    <header className={`${css.headerCon} ${isMenuActive ? css.active : ''}`}>
+      {/* <div className={`${css.header} ${isMenuActive ? css.active : ''}`}> */}
+      <div className={css.header}>
+        <h1 className={css.logo}>
+          <Link to={'/'}>TOKTOKLOG</Link>
+        </h1>
+        <Hamburger isMenuActive={isMenuActive} toggleMenu={toggleMenu} />
+        <nav className={css.gnbCon} onClick={handleBackgroundClick}>
+          <div className={css.gnb} onClick={handleGnbClick}>
+            {username ? (
+              <>
+                <MenuLike to="/createPost" label="글쓰기" closeMenu={closeMenu} />
+                <MenuLike
+                  to={`/userpage/${username}`}
+                  label={`마이페이지(${username})`}
+                  closeMenu={closeMenu}
+                />
+                <button onClick={handleLogout}>로그아웃</button>
+              </>
+            ) : (
+              <>
+                <button onClick={handleLogin}>로그인</button>
+              </>
+            )}
+          </div>
+        </nav>
       </div>
     </header>
   )
