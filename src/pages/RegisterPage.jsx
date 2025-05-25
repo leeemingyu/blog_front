@@ -1,6 +1,6 @@
 import css from './registerpage.module.css'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../apis/userApi'
 import KakaoLoginButton from '../components/KakaoLoginButton'
 
@@ -12,39 +12,45 @@ export const RegisterPage = () => {
   const [errPassword, setErrPassword] = useState('')
   const [errPasswordOk, setErrPasswordOk] = useState('')
 
-  //
   const [registerState, setRegisterState] = useState('')
+
+  const isDisabled =
+    !username || !password || !passwordOk || !!errUsername || !!errPassword || !!errPasswordOk
+
   const navigate = useNavigate()
 
   const validateUsername = value => {
     if (!value) {
-      setErrUsername('')
-      return
+      setErrUsername('사용자명을 입력해주세요.')
+      return 'error'
     }
     if (!/^[a-zA-Z][a-zA-Z0-9]{3,}$/.test(value)) {
       setErrUsername('사용자명은 영문자로 시작하는 4자 이상의 영문자 또는 숫자여야 합니다.')
+      return 'error'
     } else {
       setErrUsername('')
     }
   }
   const validatePassword = value => {
     if (!value) {
-      setErrPassword('')
-      return
+      setErrPassword('비밀번호를 입력해주세요.')
+      return 'error'
     }
     if (value.length < 4) {
-      setErrPassword('패스워드는 4자 이상이어야 합니다.')
+      setErrPassword('비밀번호는 4자 이상이어야 합니다.')
+      return 'error'
     } else {
       setErrPassword('')
     }
   }
   const validatePasswordCheck = (value, current = password) => {
     if (!value) {
-      setErrPasswordOk(' ')
-      return
+      setErrPasswordOk('비밀번호를 입력해주세요')
+      return 'error'
     }
     if (value !== current) {
-      setErrPasswordOk('패스워드가 일치하지 않습니다.')
+      setErrPasswordOk('비밀번호가 일치하지 않습니다.')
+      return 'error'
     } else {
       setErrPasswordOk('')
     }
@@ -73,14 +79,13 @@ export const RegisterPage = () => {
   const register = async e => {
     e.preventDefault()
     console.log('회원가입', username, password, passwordOk)
-    validateUsername(username)
-    validatePassword(password)
-    validatePasswordCheck(passwordOk, password)
+    const usernameError = validateUsername(username)
+    const passwordError = validatePassword(password)
+    const passwordOkError = validatePasswordCheck(passwordOk, password)
 
-    if (errUsername || errPassword || errPasswordOk || !username || !password || !passwordOk) {
+    if (usernameError || passwordError || passwordOkError) {
       return
     }
-
     try {
       setRegisterState('등록중')
 
@@ -101,33 +106,56 @@ export const RegisterPage = () => {
   }
 
   return (
-    <main className={css.registerpage}>
-      <h2>회원가입 페이지</h2>
-      {/*  */}
-      {registerState && <strong>{registerState}</strong>}
+    <main className={css.authpage}>
       <form className={css.container} onSubmit={register}>
-        <input
-          type="text"
-          placeholder="사용자명"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <strong>{errUsername}</strong>
-        <input
-          type="password"
-          placeholder="패스워드"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <strong>{errPassword}</strong>
-        <input
-          type="password"
-          placeholder="패스워드 확인"
-          value={passwordOk}
-          onChange={handlePasswordOkChange}
-        />
-        <strong>{errPasswordOk}</strong>
-        <button type="submit">가입하기</button>
+        <h2 className={css.title}>회원가입</h2>
+
+        <div className={css.inputWrapper}>
+          <label htmlFor="userId" className={css.label}>
+            아이디
+          </label>
+          <input
+            id="userId"
+            type="text"
+            value={username}
+            onChange={handleUsernameChange}
+            className={errUsername ? css.error : ''}
+          />
+          <strong>{errUsername}</strong>
+        </div>
+
+        <div className={css.inputWrapper}>
+          <label htmlFor="password" className={css.label}>
+            비밀번호
+          </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            className={errPassword ? css.error : ''}
+          />
+          <strong>{errPassword}</strong>
+        </div>
+
+        <div className={css.inputWrapper}>
+          <label htmlFor="passwordOk" className={css.label}>
+            비밀번호 확인
+          </label>
+          <input
+            id="passwordOk"
+            type="password"
+            value={passwordOk}
+            onChange={handlePasswordOkChange}
+            className={errPasswordOk ? css.error : ''}
+          />
+          <strong>{errPasswordOk}</strong>
+        </div>
+
+        <div className={css.buttonWrapper}>
+          <Link to="/login">로그인</Link>
+          <button type="submit">가입하기</button>
+        </div>
       </form>
 
       {/* 소셜 회원가입 섹션 추가 */}

@@ -1,7 +1,7 @@
 import css from './registerpage.module.css'
 import { useEffect, useState } from 'react'
 import { loginUser } from '../apis/userApi'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux'
 import { setUserInfo } from '../store/userSlice'
@@ -16,6 +16,8 @@ export const LoginPage = () => {
 
   const [loginStatus, setLoginStatus] = useState('') // 로그인 상태
   const [redirect, setRedirect] = useState(false) // 로그인 상태 메시지
+
+  const isDisabled = !username || !password || !!errUsername || !!errPassword
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -37,7 +39,7 @@ export const LoginPage = () => {
       return
     }
     if (value.length < 4) {
-      setErrPassword('패스워드는 4자 이상이어야 합니다.')
+      setErrPassword('비밀번호는 4자 이상이어야 합니다.')
     } else {
       setErrPassword('')
     }
@@ -58,7 +60,7 @@ export const LoginPage = () => {
     validateUsername(username)
     validatePassword(password)
     if (errPassword || errUsername || !username || !password) {
-      setLoginStatus('아이디와 패스워드를 확인하세요.')
+      setLoginStatus('아이디와 비밀번호를 확인하세요.')
       return
     }
     try {
@@ -89,22 +91,46 @@ export const LoginPage = () => {
     }
   }, [redirect, navigate])
   return (
-    <main className={css.loginpage}>
-      <h2>로그인 페이지</h2>
-      {loginStatus && <strong>{loginStatus}</strong>}
+    <main className={css.authpage}>
       <form className={css.container} onSubmit={login}>
-        <input value={username} onChange={handleUsernameChange} type="text" placeholder="아이디" />
-        <strong>{errUsername}</strong>
-        <input
-          value={password}
-          onChange={handlePasswordChange}
-          type="password"
-          placeholder="패스워드"
-        />
-        <strong>{errPassword}</strong>
-        <button type="submit">로그인</button>
-      </form>
+        <h2 className={css.title}>로그인</h2>
 
+        <div className={css.inputWrapper}>
+          <label htmlFor="userId" className={css.label}>
+            아이디
+          </label>
+          <input
+            id="userId"
+            value={username}
+            onChange={handleUsernameChange}
+            type="text"
+            className={errUsername ? css.error : ''}
+          />
+          <strong>{errUsername}</strong>
+        </div>
+
+        <div className={css.inputWrapper}>
+          <label htmlFor="password" className={css.label}>
+            비밀번호
+          </label>
+          <input
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+            type="password"
+            className={errPassword ? css.error : ''}
+          />
+          <strong>{errPassword}</strong>
+        </div>
+        <div className={css.buttonWrapper}>
+          <Link to="/register" label="회원가입">
+            회원가입
+          </Link>
+          <button type="submit" disabled={isDisabled}>
+            로그인
+          </button>
+        </div>
+      </form>
       {/* 소셜 로그인 섹션 추가 */}
       <div className={css.socialLogin}>
         <p>소셜 계정으로 로그인</p>
