@@ -162,6 +162,7 @@ export const Comments = ({ postId, onCommentCountChange }) => {
 
   return (
     <section className={css.comments}>
+      <p className={css.commentCount}>댓글 {comments.length}</p>
       {userInfo.username ? (
         <form onSubmit={handleSubmit}>
           <textarea
@@ -171,7 +172,7 @@ export const Comments = ({ postId, onCommentCountChange }) => {
             disabled={isLoading}
           />
           <button type="submit" disabled={isLoading}>
-            {isLoading ? '등록 중...' : '댓글 등록'}
+            {isLoading ? '등록 중...' : '댓글 남기기'}
           </button>
         </form>
       ) : (

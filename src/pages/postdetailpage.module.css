@@ -1,90 +1,117 @@
 .postdetailpage {
-  padding: 0 1rem;
+  width: 700px;
+  margin: 0px auto;
+  padding-top: 36px;
 }
 .detailimg {
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5rem;
   position: relative;
   background-color: #eaeaea;
+  border-radius: 12px;
+
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 7 / 4;
+  max-height: 400px;
+  overflow: hidden;
+  position: relative;
 }
 .detailimg img {
-  width: 100%;
+  max-height: 400px;
   height: 100%;
-  object-fit: cover;
-  position: absolute;
 }
 .postdetailpage h3 {
-  padding: 1rem 2rem;
+  margin-top: 24px;
+  font-size: 48px;
+  color: rgb(51, 61, 75);
+  line-height: 1.25;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  /* padding: 1rem 2rem;
   text-align: center;
   font-weight: bold;
   background-color: white;
   position: relative;
-  z-index: 1;
+  z-index: 1; */
+}
+.count {
+  margin-top: 24px;
 }
 .info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem;
-  font-size: 0.7rem;
+  flex-direction: column;
+  margin-top: 24px;
+  gap: 4px;
 }
 .summary {
   background-color: #eaeaea;
   padding: 1rem;
   border-radius: 1rem;
   font-style: italic;
+  margin-top: 24px;
 }
 
 .date {
-  color: #999;
-  margin-left: 0.5rem;
-  flex: 1;
+  color: rgb(139, 149, 161);
+  font-size: 14px;
 }
 .desc {
   padding: 1rem;
 }
 .content {
-  padding: 1rem;
+  margin-top: 54px;
 }
 .btns {
-  padding: 1rem 0;
+  padding: 54px 0 50px 0;
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-  border-top: 1px dotted #e3e3e3;
-  border-bottom: 1px dotted #e3e3e3;
+  font-size: 15px;
+  color: #4e5968;
+  font-weight: 600;
 }
 .btns a,
 .btns span {
-  background-color: lightgray;
-  font-size: 0.75rem;
   border-radius: 10px;
   padding: 1rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 .btns a:hover,
 .btns span:hover {
-  background-color: grey;
-  color: white;
+  background-color: var(--grey300);
 }
 .commentlist {
   padding: 1rem;
 }
 .author {
-  color: dodgerblue;
-  font-weight: bold;
-  padding: 0.25rem 1rem 0.25rem 0;
+  font-size: 17px;
   cursor: pointer;
+  color: rgb(78, 89, 104);
+  transition: color 0.2s;
+  height: auto;
+}
+.author a {
+  padding: 12px;
+  padding-left: 0;
 }
 .author:hover {
-  color: rgb(1, 75, 148);
+  cursor: default;
+}
+.author a:hover {
+  color: #007bff;
 }
 
-.author:hover {
-  color: rgb(1, 75, 148);
+@media (max-width: 760px) {
+  .postdetailpage {
+    width: 100%;
+    padding: 0px 24px;
+    padding-top: 36px;
+  }
+  .postdetailpage h3 {
+    font-size: 32px;
+  }
 }
