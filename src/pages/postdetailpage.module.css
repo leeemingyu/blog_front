@@ -39,6 +39,17 @@
 }
 .count {
   margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+}
+.count img {
+  width: 16px;
+  height: 16px;
+}
+.count span {
+  display: flex;
+  align-items: center;
 }
 .info {
   display: flex;

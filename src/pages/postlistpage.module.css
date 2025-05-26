@@ -97,11 +97,13 @@
   position: absolute;
 }
 
+@media (max-width: 900px) {
+  .trending {
+    display: none;
+  }
+}
 @media (max-width: 639px) {
   .banner {
     height: 80px;
-  }
-  .trending {
-    display: none;
   }
 }

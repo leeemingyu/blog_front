@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toggleLike } from '../apis/postApi'
 import { useSelector } from 'react-redux'
+import heart from '../assets/heart.svg'
+import heartFill from '../assets/heart-fill.svg'
 
 export default function LikeButton({ postId, likes, className = '' }) {
   const navigate = useNavigate()
@@ -48,11 +50,11 @@ export default function LikeButton({ postId, likes, className = '' }) {
   }
 
   return (
-    <span className={className}>
+    <>
       <span onClick={handleLikeToggle} style={{ cursor: 'pointer' }}>
-        {isLiked ? '❤️' : '🤍'}
+        <img src={isLiked ? heartFill : heart} alt="like" />
       </span>
-      <span>{likesCount}</span>
-    </span>
+      <span>&nbsp;{likesCount}</span>
+    </>
   )
 }

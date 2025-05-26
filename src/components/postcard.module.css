@@ -55,7 +55,7 @@
     color: #007bff;
   }
 }
-.postcard:hover img {
+.postcard:hover .post_img img {
   transform: scale(1.2);
 }
 
@@ -97,4 +97,14 @@
   color: var(--grey700);
   line-height: 1.6;
   font-size: 13px;
+  display: flex;
+}
+.etc img {
+  width: 14px;
+  height: 14px;
+}
+.etc span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

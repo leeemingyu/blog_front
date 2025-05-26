@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 import { Comments } from '../components/Comments'
 //
 import LikeButton from '../components/LikeButton'
+import commentIcon from '../assets/comment.svg'
 
 export const PostDetailPage = () => {
   const username = useSelector(state => state.user.user.username)
@@ -51,13 +52,21 @@ export const PostDetailPage = () => {
   return (
     <main className={css.postdetailpage}>
       <section>
-        <div className={css.detailimg}>
-          <img src={`${import.meta.env.VITE_BACK_URL}/${postInfo?.cover}`} alt="" />
-        </div>
+        {postInfo.cover ? (
+          <div className={css.detailimg}>
+            <img src={`${import.meta.env.VITE_BACK_URL}/${postInfo?.cover}`} alt="" />
+          </div>
+        ) : (
+          ''
+        )}
+
         <h3>{postInfo?.title}</h3>
         <p className={css.count}>
-          {postInfo && <LikeButton postId={postId} likes={postInfo.likes} />}{' '}
-          <span style={{ marginLeft: '10px' }}>💬 {commentCount}</span>
+          <span>{postInfo && <LikeButton postId={postId} likes={postInfo.likes} />}</span>
+          <span style={{ marginLeft: '10px' }}>
+            <img src={commentIcon} alt="commentIcon" />
+            &nbsp;{commentCount}
+          </span>
         </p>
         <div className={css.info}>
           <p className={css.author}>
