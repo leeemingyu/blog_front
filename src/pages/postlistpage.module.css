@@ -44,6 +44,15 @@
 .topPosts {
   width: 300px;
 }
+.trendingTitle {
+  color: #6b7684;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.recentComments {
+  margin-top: 24px;
+}
 
 .tabsCon {
   position: sticky;

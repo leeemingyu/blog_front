@@ -25,3 +25,9 @@ export const updateComment = async (commentId, content) => {
   const response = await axios.put(`${API_URL}/comments/${commentId}`, { content })
   return response.data
 }
+
+// 최신 댓글 목록 조회
+export const getRecentComments = async () => {
+  const response = await axios.get(`${API_URL}/comments/recent`)
+  return response.data
+}

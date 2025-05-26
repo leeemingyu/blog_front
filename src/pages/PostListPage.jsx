@@ -1,18 +1,30 @@
 import css from './postlistpage.module.css'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import PostCard from '../components/PostCard'
-import { getPostList } from '../apis/postApi'
+import { getPopularPosts, getPostList } from '../apis/postApi'
+import PopularPost from '../components/PopularPost'
+import { getRecentComments } from '../apis/commentApi'
+import { useNavigate } from 'react-router-dom'
+import RecentComment from '../components/RecentComment'
 
 export const PostListPage = () => {
   const [postList, setPostList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [popularPosts, setPopularPosts] = useState([])
+  const [recentComm, setRecentComm] = useState([])
 
   // 페이지네이션을 위한 상태 추가
   const [page, setPage] = useState(0)
   const [hasMore, setHasMore] = useState(true)
   const listRef = useRef(null)
   const observer = useRef()
+
+  const navigate = useNavigate()
+
+  const goDetail = postId => {
+    navigate(`/detail/${postId}`)
+  }
 
   // 마지막 게시물 요소를 감지하는 ref 콜백
   const lastPostElementRef = useCallback(
@@ -51,6 +63,34 @@ export const PostListPage = () => {
     fetchPostList()
   }, [page])
 
+  useEffect(() => {
+    const fetchPopularPosts = async () => {
+      try {
+        const data = await getPopularPosts(page)
+        setPopularPosts(data.posts)
+        console.log(data.posts)
+      } catch (error) {
+        console.error('인기글 조회 실패:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchPopularPosts()
+
+    const fetchRecentComments = async () => {
+      try {
+        const data = await getRecentComments(page)
+        setRecentComm(data)
+        console.log(data)
+      } catch (error) {
+        console.error('최신 댓글 조회 실패:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchRecentComments()
+  }, [])
+
   return (
     <div className={css.container}>
       <div className={css.bannerCon}>
@@ -83,55 +123,20 @@ export const PostListPage = () => {
         </div>
         <div className={css.trending}>
           <div className={css.topPosts}>
-            <span>인기있는 글</span>
-            <article>
-              <div>
-                <span>제목1제목1제목1제목1</span>
-                <span>이름</span>
-              </div>
-            </article>
-            <article>
-              <div>
-                <span>제목2제목2제목2제목2</span>
-                <span>이름</span>
-              </div>
-            </article>
-            <article>
-              <div>
-                <span>제목3제목3제목3제목3</span>
-                <span>이름</span>
-              </div>
-            </article>
+            <span className={css.trendingTitle}>인기있는 글</span>
+            {popularPosts.map((post, i) => (
+              <li key={post._id}>
+                <PopularPost post={post} />
+              </li>
+            ))}
           </div>
-          <div>
-            <span>최근 댓글</span>
-            <div>
-              <div>이름</div>
-              <div>
-                <span>댓글1댓글1댓글1</span>
-              </div>
-              <div>
-                <span>제목</span>
-              </div>
-            </div>
-            <div>
-              <div>이름</div>
-              <div>
-                <span>댓글1댓글1댓글1</span>
-              </div>
-              <div>
-                <span>제목</span>
-              </div>
-            </div>
-            <div>
-              <div>이름</div>
-              <div>
-                <span>댓글1댓글1댓글1</span>
-              </div>
-              <div>
-                <span>제목</span>
-              </div>
-            </div>
+          <div className={css.recentComments}>
+            <span className={css.trendingTitle}>최근 댓글</span>
+            {recentComm.map((comm, i) => (
+              <li key={comm._id}>
+                <RecentComment comment={comm} />
+              </li>
+            ))}
           </div>
         </div>
       </main>

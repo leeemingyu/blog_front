@@ -39,3 +39,8 @@ export const toggleLike = async postId => {
   const response = await axios.post(`${API_URL}/posts/${postId}/like`)
   return response.data
 }
+
+export const getPopularPosts = async () => {
+  const response = await axios.get(`${API_URL}/posts/popular`)
+  return response.data
+}
