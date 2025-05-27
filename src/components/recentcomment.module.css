@@ -23,7 +23,7 @@
   max-height: 40px;
   margin-top: 8px;
   text-overflow: ellipsis;
-  line-height: 1;
+  line-height: 1.6;
   overflow: hidden;
   color: rgb(78, 89, 104);
 }
