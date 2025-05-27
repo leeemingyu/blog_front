@@ -1,14 +1,22 @@
-import { Link } from 'react-router-dom'
 import css from './recentcomment.module.css'
-import { formatDate } from '../utils/features'
 import { useNavigate } from 'react-router-dom'
-import LikeButton from './LikeButton'
 
-export default function RecentComment({ comment }) {
+export default function RecentComment({ comment, isLoading }) {
   const navigate = useNavigate()
 
   const goDetail = () => {
     navigate(`/detail/${comment.postId._id}`)
+  }
+  if (isLoading) {
+    return (
+      <div className={css.recentComments}>
+        <div className={css.commAuthor}></div>
+        <div className={css.commContent}></div>
+        <div className={css.commPostTitle}>
+          <span></span>
+        </div>
+      </div>
+    )
   }
 
   return (

@@ -4,88 +4,64 @@ import PostCard from '../components/PostCard'
 import { getPopularPosts, getPostList } from '../apis/postApi'
 import PopularPost from '../components/PopularPost'
 import { getRecentComments } from '../apis/commentApi'
-import { useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import RecentComment from '../components/RecentComment'
 
 export const PostListPage = () => {
-  const [postList, setPostList] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [popularPosts, setPopularPosts] = useState([])
-  const [recentComm, setRecentComm] = useState([])
+  const { posts, hasMore, popularPosts } = useLoaderData()
 
-  // 페이지네이션을 위한 상태 추가
+  const [postList, setPostList] = useState(posts)
   const [page, setPage] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [hasMoreState, setHasMoreState] = useState(hasMore)
+  const [recentComments, setRecentComments] = useState([])
+  const [recentLoading, setRecentLoading] = useState(false)
+  const [error, setError] = useState(null)
   const listRef = useRef(null)
+  const isLoading = loading && page === 0
+
   const observer = useRef()
-
-  const navigate = useNavigate()
-
-  const goDetail = postId => {
-    navigate(`/detail/${postId}`)
-  }
-
-  // 마지막 게시물 요소를 감지하는 ref 콜백
   const lastPostElementRef = useCallback(
     node => {
-      if (isLoading || !node) return
+      if (loading || !node) return
       if (observer.current) observer.current.disconnect()
-
       observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting && hasMoreState) {
           setPage(prev => prev + 1)
         }
       })
-
       observer.current.observe(node)
     },
-    [isLoading, hasMore]
+    [loading, hasMoreState]
   )
 
   useEffect(() => {
-    const fetchPostList = async () => {
+    if (page === 0) return
+    const fetchNextPage = async () => {
       try {
-        // 페이지가 0보다 크면 추가 데이터 로딩
-        if (page > 0) setIsLoading(true)
-        // 수정된 페이지 정보 전달
+        setLoading(true)
         const data = await getPostList(page)
-        //
-        setPostList(prev => (page === 0 ? data.posts : [...prev, ...data.posts]))
-        setHasMore(data.hasMore)
-      } catch (error) {
-        console.error('목록조회 실패:', error)
-        setError('글 목록을 불러오는데 실패했습니다.')
+        setPostList(prev => [...prev, ...data.posts])
+        setHasMoreState(data.hasMore)
+      } catch {
+        setError('잠시 후 다시 시도해주세요')
       } finally {
-        setIsLoading(false)
+        setLoading(false)
       }
     }
-    fetchPostList()
+    fetchNextPage()
   }, [page])
 
   useEffect(() => {
-    const fetchPopularPosts = async () => {
-      try {
-        const data = await getPopularPosts(page)
-        setPopularPosts(data.posts)
-        console.log(data.posts)
-      } catch (error) {
-        console.error('인기글 조회 실패:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    fetchPopularPosts()
-
     const fetchRecentComments = async () => {
       try {
+        setRecentLoading(true)
         const data = await getRecentComments(page)
-        setRecentComm(data)
-        console.log(data)
-      } catch (error) {
-        console.error('최신 댓글 조회 실패:', error)
+        setRecentComments(data)
+      } catch {
+        setError('잠시 후 다시 시도해주세요')
       } finally {
-        setIsLoading(false)
+        setRecentLoading(false)
       }
     }
     fetchRecentComments()
@@ -105,10 +81,8 @@ export const PostListPage = () => {
             </div>
           </div>
           {error && <p className={css.errorMessage}>{error}</p>}
-          {isLoading && page === 0 ? (
-            <p>로딩중...</p>
-          ) : postList.length === 0 ? (
-            <p className={css.noPostMessage}>첫번째 글의 주인공이 되어주세요</p>
+          {postList.length === 0 ? (
+            <p className={css.noPostMessage}>아직 작성된 글이 없어요!</p>
           ) : (
             // ref
             <ul className={css.postList} ref={listRef}>
@@ -131,11 +105,13 @@ export const PostListPage = () => {
           </div>
           <div className={css.recentComments}>
             <span className={css.trendingTitle}>최근 댓글</span>
-            {recentComm.map((comm, i) => (
-              <li key={comm._id}>
-                <RecentComment comment={comm} />
-              </li>
-            ))}
+            {recentComments.length === 0 && recentLoading
+              ? Array(4)
+                  .fill(0)
+                  .map((_, i) => <RecentComment key={i} isLoading={true} />)
+              : recentComments.map(comm => (
+                  <RecentComment key={comm._id} comment={comm} isLoading={false} />
+                ))}
           </div>
         </div>
       </main>

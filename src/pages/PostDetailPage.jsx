@@ -1,6 +1,6 @@
 import css from './postdetailpage.module.css'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import { getPostDetail, deletePost } from '../apis/postApi'
 import { formatDate } from '../utils/features'
 import { useSelector } from 'react-redux'
@@ -10,41 +10,26 @@ import LikeButton from '../components/LikeButton'
 import commentIcon from '../assets/comment.svg'
 
 export const PostDetailPage = () => {
+  const postInfo = useLoaderData() // loader에서 받은 데이터
+  const navigate = useNavigate()
   const username = useSelector(state => state.user.user.username)
   const { postId } = useParams()
-  const [postInfo, setPostInfo] = useState({})
-  // 댓글 수 상태관리
-  const [commentCount, setCommentCount] = useState(0)
 
-  useEffect(() => {
-    const fetchPostDetail = async () => {
-      try {
-        const data = await getPostDetail(postId)
-        console.log(data)
-        setPostInfo(data)
-        // 초기 댓글 수 설정 (백엔드에서 전달받은 경우)
-        setCommentCount(data.commentCount || 0)
-      } catch (error) {
-        console.error('상세정보 조회 실패:', error)
-      }
-    }
-    fetchPostDetail()
-  }, [postId])
+  // 댓글 수 상태만 컴포넌트에서 관리
+  const [commentCount, setCommentCount] = useState(postInfo.commentCount || 0)
 
-  // 댓글 수를 업데이트하는 함수
-  const updateCommentCount = count => {
-    setCommentCount(count)
-  }
+  // 댓글 수 업데이트 함수
+  const updateCommentCount = count => setCommentCount(count)
 
   const handleDeletePost = async () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
       try {
-        await deletePost(postId)
+        await deletePost(postInfo._id)
         alert('삭제되었습니다.')
-        window.location.href = '/'
+        navigate('/') // location.href 대신 navigate 사용 추천
       } catch (error) {
-        console.error('글 삭제 실패:', error)
         alert('삭제에 실패했습니다.')
+        console.error(error)
       }
     }
   }

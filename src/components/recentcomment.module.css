@@ -12,6 +12,7 @@
   padding: 20px;
   cursor: pointer;
   transition: 0.2s;
+  min-height: 122px;
 }
 .commAuthor {
   color: rgb(51, 61, 75);
@@ -26,6 +27,8 @@
   line-height: 1.6;
   overflow: hidden;
   color: rgb(78, 89, 104);
+  font-size: 13px;
+  font-weight: 600;
 }
 .commPostTitle {
   color: rgb(139, 149, 161);

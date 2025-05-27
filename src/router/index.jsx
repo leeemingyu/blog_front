@@ -8,6 +8,8 @@ import { PostDetailPage } from '../pages/PostDetailPage'
 import { EditePost } from '../pages/EditePost'
 import { UserPage } from '../pages/UserPage'
 import { UserInfoUpdate } from '../pages/UserInfoUpdate'
+import { postListLoader } from '../loaders/PostListLoader'
+import { postDetailLoader } from '../loaders/postDetailLodaer'
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <PostListPage />,
+        loader: postListLoader,
       },
       {
         path: '/register',
@@ -34,6 +37,7 @@ export const router = createBrowserRouter([
       {
         path: '/detail/:postId',
         element: <PostDetailPage />,
+        loader: postDetailLoader,
       },
       {
         path: '/edit/:postId',
