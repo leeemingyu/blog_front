@@ -102,7 +102,6 @@ export const PostListPage = () => {
             <div className={css.tabs}>
               <div className={css.indicator}></div>
               <div className={`${css.tab} ${css.active}`}>전체</div>
-              <div className={css.tab}>개발</div>
             </div>
           </div>
           {error && <p className={css.errorMessage}>{error}</p>}
