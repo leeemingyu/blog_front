@@ -8,8 +8,8 @@ import { PostDetailPage } from '../pages/PostDetailPage'
 import { EditePost } from '../pages/EditePost'
 import { UserPage } from '../pages/UserPage'
 import { UserInfoUpdate } from '../pages/UserInfoUpdate'
-import { postListLoader } from '../loaders/PostListLoader'
-import { postDetailLoader } from '../loaders/postDetailLodaer'
+import { postListLoader } from '../loaders/postListLoader'
+import { postDetailLoader } from '../loaders/postDetailLoader'
 
 export const router = createBrowserRouter([
   {
