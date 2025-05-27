@@ -101,9 +101,6 @@
 .gnb a:hover {
   background-color: #f2f3f7;
 }
-.gnb a:nth-of-type(2) {
-  width: 130px;
-}
 
 .gnb a.active {
   /* background-color: #aaaaaa; */

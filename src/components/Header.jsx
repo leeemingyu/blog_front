@@ -11,7 +11,6 @@ export const Header = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
   const username = user?.username
-  console.log(username)
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
@@ -93,11 +92,7 @@ export const Header = () => {
             {username ? (
               <>
                 <MenuLike to="/createPost" label="글쓰기" closeMenu={closeMenu} />
-                <MenuLike
-                  to={`/userpage/${username}`}
-                  label={`마이페이지(${username})`}
-                  closeMenu={closeMenu}
-                />
+                <MenuLike to={`/userpage/${username}`} label={`마이페이지`} closeMenu={closeMenu} />
                 <button onClick={handleLogout}>로그아웃</button>
               </>
             ) : (
