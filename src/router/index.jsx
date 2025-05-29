@@ -10,12 +10,13 @@ import { UserPage } from '../pages/UserPage'
 import { UserInfoUpdate } from '../pages/UserInfoUpdate'
 import { postListLoader } from '../loaders/postListLoader'
 import { postDetailLoader } from '../loaders/postDetailLoader'
+import ErrorPage from '../pages/ErrorPage'
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <DefaultLayout />,
-    errorElement: <div>에러</div>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

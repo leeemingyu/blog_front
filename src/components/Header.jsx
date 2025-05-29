@@ -52,11 +52,12 @@ export const Header = () => {
   // 로딩 중일 때는 메뉴 표시하지 않음
   if (isLoading) {
     return (
-      <header className={css.header}>
-        <h1 className={css.logo}>
-          <Link to={'/'}>TOKTOKLOG</Link>
-        </h1>
-        <div>로딩 중...</div>
+      <header className={`${css.headerCon} ${isMenuActive ? css.active : ''}`}>
+        <div className={css.header}>
+          <h1 className={css.logo}>
+            <Link to={'/'}>TOKTOKLOG</Link>
+          </h1>
+        </div>
       </header>
     )
   }
@@ -115,15 +116,13 @@ const MenuLike = ({ to, label, closeMenu }) => (
 
 const Hamburger = ({ isMenuActive, toggleMenu }) => (
   <button className={`${css.hamburger} ${isMenuActive ? css.active : ''}`} onClick={toggleMenu}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      className="bi bi-list"
-      viewBox="0 0 16 16"
-    >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
-        fillRule="evenodd"
-        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+        d="M5 17H19M5 12H19M5 7H19"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       />
     </svg>
   </button>
