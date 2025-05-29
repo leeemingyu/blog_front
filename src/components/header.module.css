@@ -45,8 +45,9 @@
 }
 
 .hamburger svg {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
+  fill: rgba(176, 184, 193, 1);
 }
 
 .gnbCon {
